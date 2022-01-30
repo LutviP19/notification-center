@@ -14,6 +14,11 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
   <!-- Scripts -->
+  <script>
+          <?php $user = Auth::user(); ?>
+      var userId = "{{ $user->id }}";
+      var userName = "{{ $user->name }}";
+  </script>
   <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans antialiased">
@@ -32,5 +37,7 @@
     {{ $slot }}
   </main>
 </div>
+{{--<script src="./node_modules/@themesberg/flowbite/dist/flowbite.bundle.js"></script>--}}
+<script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.bundle.js"></script>
 </body>
 </html>

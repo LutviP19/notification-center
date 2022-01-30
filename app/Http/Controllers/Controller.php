@@ -11,5 +11,5 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $provider = ['telkomsel', 'xl', 'tri'];
+    const providers = ['telkomsel', 'xl', 'tri'];
 }
