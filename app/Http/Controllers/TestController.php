@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
+use App\Events\SendMessage;
+use App\Helpers;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     public function hit(Request $request)
     {
-        event(new \App\Events\SendMessage($request->message));
+        event(new SendMessage($request->message ?: $request->phone_number));
+        event(new NotificationEvent($request->phone_number ?: 'Monika'));
         return 1;
     }
 
@@ -22,10 +26,13 @@ class TestController extends Controller
         $plain_txt = "0812-8888-7777";
         echo "Plain Text =" . $plain_txt . "\n<br>";
 
-        $encrypted_txt = encrypt_decrypt('encrypt', $plain_txt);
+        $encrypted_txt = Helpers::encrypt_decrypt('encrypt', $plain_txt);
         echo "Encrypted Text = " . $encrypted_txt . "\n<br>";
 
-        $decrypted_txt = encrypt_decrypt('decrypt', $encrypted_txt);
+        $decrypted_txt = Helpers::encrypt_decrypt('decrypt', $encrypted_txt);
         echo "Decrypted Text =" . $decrypted_txt . "\n<br>";
+
+        if ($decrypted_txt === $plain_txt)
+            echo "SUCCESS";
     }
 }

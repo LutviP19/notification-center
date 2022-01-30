@@ -45,7 +45,6 @@
 <script type="text/javascript">
     window.laravel_echo_hostname = '{{ env('LARAVEL_ECHO_HOSTNAME') }}';
 </script>
-<script src="{{ env('LARAVEL_ECHO_HOSTNAME') }}/socket.io/socket.io.js" type="text/javascript"></script>
 <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     function sendMessage() {

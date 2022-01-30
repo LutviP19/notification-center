@@ -1,8 +1,7 @@
 //var socketId = Echo.socketId();
 // Enable pusher logging - don't include this in production
-import Echo from "laravel-echo";
 
-Pusher.logToConsole = true;
+//Pusher.logToConsole = true;
 var pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
@@ -28,14 +27,3 @@ channel2.bind('.proses.data', function (data) {
     console.log(data);
     alert(JSON.stringify(data));
 });
-
-let laravelEcho = new Echo({
-    broadcaster: 'socket.io',
-    host: 'http://127.0.0.1:6001' // this is laravel-echo-server host
-});
-
-var userId = 1;
-laravelEcho.private('App.Models.User.' + userId)
-    .notification((notification) => {
-        console.log(notification.type);
-    });

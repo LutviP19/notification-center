@@ -6068,8 +6068,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 //var socketId = Echo.socketId();
 // Enable pusher logging - don't include this in production
+            //Pusher.logToConsole = true;
 
-            Pusher.logToConsole = true;
             var pusher = new Pusher("968b2564329233adb817", {
                 cluster: "ap1",
                 encrypted: true
@@ -6090,15 +6090,6 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
                 // this is called when the event notification is received...
                 console.log(data);
                 alert(JSON.stringify(data));
-            });
-            var laravelEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
-                broadcaster: 'socket.io',
-                host: 'http://127.0.0.1:6001' // this is laravel-echo-server host
-
-            });
-            var userId = 1;
-            laravelEcho["private"]('App.Models.User.' + userId).notification(function (notification) {
-                console.log(notification.type);
             });
 
             /***/

@@ -35,7 +35,6 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
 
-
           <div
               class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <h3 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">You're logged in!</h3>
@@ -69,20 +68,23 @@
             </div>
           </div>
 
-          <!-- Two columns -->
+          <!-- columns -->
           <div class="flex flex-row mb-4">
-            <div class="basis-1/4">
+            <div class="basis-1/2">
               <div class="max-w-sm rounded overflow-hidden shadow-lg">
                 <div class="px-6 py-4">
                   <div class="font-bold text-xl mb-2">Data No Handphone</div>
-                  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                  <form name="input-data" id="input-data" action="/hit" method="POST"
+                        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="contactForm()"
+                        @submit.prevent="submitData">
+                    @csrf
                     <div class="mb-4">
                       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         No Handphone
                       </label>
                       <input
                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          id="phone-number" type="text" placeholder="No Handphone">
+                          id="phone-number" name="phone_number" type="text" placeholder="No Handphone">
                     </div>
                     <div class="mb-6">
                       <label class="block text-gray-700 text-sm font-bold mb-2" for="provider">
@@ -91,7 +93,7 @@
                       <div class="relative">
                         <select
                             class="block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline capitalize"
-                            id="provider">
+                            id="provider" name="provider">
                           @foreach ($providers as $provider)
                             <option value="{{ $provider }}">{{ $provider }}</option>
                           @endforeach
@@ -101,7 +103,7 @@
                     <div class="flex items-center justify-between">
                       <button
                           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                          type="button">
+                          type="submit">
                         Save
                       </button>
                       <button
@@ -110,51 +112,82 @@
                         Auto
                       </button>
                     </div>
+                    <p x-text="message"></p>
                   </form>
                 </div>
               </div>
             </div>
 
             <div class="basis-1/4">
-              <div class="flex justify-center mt-4">
-                <h3>--->>> Proses --->>></h3>
+              <div class="font-bold text-xl mb-3">Output Ganjil</div>
+              <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow-md sm:rounded-lg">
+                      <table class="min-w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                          <th scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                            Ganjil
+                          </th>
+                          <th scope="col" class="relative py-3 px-6">
+                            <span class="sr-only">Action</span>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Product 1 -->
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            0812-8888-7777
+                          </td>
+                          <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                            <a href="#"
+                               class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
+                            <a href="#" class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="basis-1/2">
-              <div class="max-w-sm rounded shadow-lg px-2 py-2">
-                <div class="px-2 py-4">
-                  <div class="font-bold text-xl mb-3">Output</div>
-                  <div class="flex flex-row">
-                    <div class="-my-2 overflow-hidden sm:-mx-6 lg:-mx-8">
-                      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                          <table class="min-w-full border-collapse border border-slate-400">
-                            <thead class="bg-gray-50">
-                            <tr>
-                              <th scope="col"
-                                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-slate-300">
-                                Ganjil
-                              </th>
-                              <th scope="col"
-                                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-slate-300">
-                                Genap
-                              </th>
-                            </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                            <tr>
-                              <td class="px-6 py-4 whitespace-nowrap border border-slate-300">
-                                0812-8880-9801
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap border border-slate-300">
-                                0812-8880-9802
-                              </td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+            <div class="basis-1/4">
+              <div class="font-bold text-xl mb-3">Output Genap</div>
+              <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow-md sm:rounded-lg">
+                      <table class="min-w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                          <th scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                            Genap
+                          </th>
+                          <th scope="col" class="relative py-3 px-6">
+                            <span class="sr-only">Action</span>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Product 1 -->
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            0812-8888-7777
+                          </td>
+                          <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                            <a href="#"
+                               class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
+                            <a href="#" class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -166,4 +199,53 @@
       </div>
     </div>
   </div>
+
+  <script>
+      function contactForm() {
+          return {
+              /*formData: {
+                  name: '',
+                  email: '',
+                  message: ''
+              },*/
+              message: '',
+
+              loading: false,
+              buttonLabel: 'Submit',
+
+              submitData() {
+                  let formElement = document.getElementById("input-data");
+                  let body = new URLSearchParams(new FormData(formElement)).toString();
+
+                  //console.log(JSON.stringify(body));
+                  this.buttonLabel = 'Submitting...';
+                  this.loading = true;
+                  this.message = '';
+
+                  fetch('/hit', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                      },
+                      body: body
+                  })
+                      .then((response) => {
+                          console.log(JSON.stringify(response));
+                          let data = response.data;
+                          this.message = 'Form sucessfully submitted!' + data
+                      })
+                      .catch((error) => {
+                          this.message = 'Ooops! Something went wrong!'
+                      })
+                      .finally(() => {
+                          this.loading = false;
+                          this.buttonLabel = 'Submit'
+                      })
+              }
+          }
+      }
+  </script>
+
 </x-app-layout>
+

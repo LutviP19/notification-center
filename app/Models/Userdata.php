@@ -15,4 +15,14 @@ class Userdata extends Model
      * @var string
      */
     protected $table = 'userdatas';
+
+    public function setUserIdAttribute($value)
+    {
+
+    }
+
+    public function getUserIdAttribute($value)
+    {
+
+    }
 }

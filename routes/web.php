@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -40,6 +44,7 @@ Route::post('hit', [TestController::class, 'hit']);
 
 Route::get('test', function () {
     event(new App\Events\NotificationEvent('Monika'));
+    event(new App\Events\StatusLiked('Someone'));
     /*event(new App\Events\CekNomerEvent('0812-1236-7896'));
     event(new App\Events\ProsesData('0812-1236-7896'));
 
