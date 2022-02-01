@@ -44,31 +44,38 @@
 
 <script type="text/javascript">
     window.laravel_echo_hostname = '{{ env('LARAVEL_ECHO_HOSTNAME') }}';
+    window.laravel_echo_port = '{{env("LARAVEL_ECHO_PORT")}}';
 </script>
+<script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
 <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    var i = 0;
+    window.Echo.channel('user-channel')
+        .listen('.UserEvent', (data) => {
+            console.log(data);
+            i++;
+            $("#notification").append('<div class="alert alert-success">' + i + '. ' + data.phone_number + '</div>');
+        });
+</script>
 <script type="text/javascript">
     function sendMessage() {
         jQuery.ajax({
             url: '{{ url('hit') }}',
             method: 'post',
-            data: 'message=' + jQuery('#message').val(),
+            //data: 'message=' + jQuery('#message').val(),
+            data: {
+                'phone_number': jQuery('#message').val(),
+                'provider': 'bebas',
+                'number_type': 'ganjil'
+            },
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             success: function (r) {
                 jQuery('#message').val('');
-                console.log(r);
+                //console.log(r);
             }
         })
     }
 </script>
-<script type="text/javascript">
-    var i = 0;
-    window.Echo.channel('user-channel').listen('.UserEvent', (data) => {
-        console.log(data);
-        i++;
-        $("#notification").append('<div class="alert alert-success">' + i + '. ' + data.title + '</div>');
-    });
-</script>
-
 </html>

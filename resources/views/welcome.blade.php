@@ -98,7 +98,7 @@
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
 
-    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+    /*var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
         cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
         encrypted: true
     });
@@ -107,7 +107,10 @@
     var channel = pusher.subscribe('status-liked');
 
     // Bind a function to a Event (the full Laravel class)
-    channel.bind('App\\Events\\StatusLiked', function (data) {
+    channel.bind('.StatusLiked', function (data) {*/
+
+    Echo.channel('status-liked')
+        .listen('.StatusLiked', (data) => {
         var existingNotifications = notifications.html();
         var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `

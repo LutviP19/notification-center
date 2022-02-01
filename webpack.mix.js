@@ -11,6 +11,15 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    resolve: {
+        fallback: {
+            crypto: require.resolve('crypto-browserify'),
+            stream: require.resolve("stream-browserify")
+        },
+    },
+});
+
 mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),

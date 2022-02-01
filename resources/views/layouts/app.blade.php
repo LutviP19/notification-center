@@ -14,12 +14,17 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
   <!-- Scripts -->
-  <script>
+  <script type="text/javascript">
+      window.laravel_echo_hostname = '{{ env('LARAVEL_ECHO_HOSTNAME') }}';
+      window.laravel_echo_port = '{{env("LARAVEL_ECHO_PORT")}}';
+
           <?php $user = Auth::user(); ?>
       var userId = "{{ $user->id }}";
       var userName = "{{ $user->name }}";
   </script>
+  <script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="{{ asset('js/encryption.js') }}" defer></script>
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">

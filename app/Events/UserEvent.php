@@ -2,13 +2,15 @@
 
 namespace App\Events;
 
+use App\Models\Userdata;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use stdClass;
 
-class SendMessage implements ShouldBroadcastNow
+class UserEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -17,11 +19,21 @@ class SendMessage implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param stdClass $data
      */
-    public function __construct($data)
+    public function __construct(stdClass $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'UserEvent';
     }
 
     /**
@@ -37,22 +49,13 @@ class SendMessage implements ShouldBroadcastNow
     /**
      * The event's broadcast name.
      *
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'UserEvent';
-    }
-
-    /**
-     * The event's broadcast name.
-     *
      * @return array
      */
     public function broadcastWith()
     {
-        return [
+        /*return [
             'title' => $this->data
-        ];
+        ];*/
+        return Userdata::formatNotificationData($this->data);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Controller;
+use App\Helpers;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +26,7 @@ Route::get('/welcome', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
-        'providers' => Controller::providers]);
+        'providers' => Helpers::providers]);
 })->middleware(['auth'])->name('dashboard');
 
 Route::prefix('auth')->group(function () {
@@ -36,20 +36,23 @@ Route::prefix('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
+// Process
+/*Route::prefix('process')->group(function () {
+    Route::post('save', [ProcessController::class, 'save']);
+    Route::post('auto', [ProcessController::class, 'auto']);
+});*/
+
 /* Testing Broadcast */
 Route::get('form', [TestController::class, 'form']);
 Route::get('enkripsi', [TestController::class, 'enkripsi']);
+Route::get('auto', [TestController::class, 'auto']);
 
 Route::post('hit', [TestController::class, 'hit']);
 
 Route::get('test', function () {
+    event(new App\Events\TestEvent());
     event(new App\Events\NotificationEvent('Monika'));
-    event(new App\Events\StatusLiked('Someone'));
-    /*event(new App\Events\CekNomerEvent('0812-1236-7896'));
-    event(new App\Events\ProsesData('0812-1236-7896'));
+    event(new App\Events\StatusLiked('Linked Someone'));
 
-    $developers=[1];
-    $deployment=['invoice_id' => 1, 'amount' => 888888,];
-    Notification::sendNow($developers, new ProsesDataSelesai($deployment));
-    return "Event has been sent!";*/
+    echo "ok";
 });

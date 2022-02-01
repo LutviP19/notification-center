@@ -74,8 +74,8 @@
               <div class="max-w-sm rounded overflow-hidden shadow-lg">
                 <div class="px-6 py-4">
                   <div class="font-bold text-xl mb-2">Data No Handphone</div>
-                  <form name="input-data" id="input-data" action="/hit" method="POST"
-                        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="contactForm()"
+                  <form name="input-data" id="input-data" action="/api/process/save" method="POST"
+                        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="processForm()"
                         @submit.prevent="submitData">
                     @csrf
                     <div class="mb-4">
@@ -94,7 +94,7 @@
                         <select
                             class="block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline capitalize"
                             id="provider" name="provider">
-                          @foreach ($providers as $provider)
+                          @foreach ($providers as $provider => $val)
                             <option value="{{ $provider }}">{{ $provider }}</option>
                           @endforeach
                         </select>
@@ -103,12 +103,13 @@
                     <div class="flex items-center justify-between">
                       <button
                           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                          type="submit">
+                          type="submit" x-text="buttonLabel" :disabled="loading">
                         Save
                       </button>
                       <button
                           class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                          type="button">
+                          type="button" @click="generateData" x-data="processAuto()" x-text="buttonAutoLabel"
+                          :disabled="loadingAuto">
                         Auto
                       </button>
                     </div>
@@ -201,46 +202,88 @@
   </div>
 
   <script>
-      function contactForm() {
+      //console.log(encrypt_data('0812-8888-9999'));
+
+      function processForm() {
           return {
-              /*formData: {
-                  name: '',
-                  email: '',
-                  message: ''
-              },*/
               message: '',
-
               loading: false,
-              buttonLabel: 'Submit',
-
+              buttonLabel: 'Save',
               submitData() {
                   let formElement = document.getElementById("input-data");
-                  let body = new URLSearchParams(new FormData(formElement)).toString();
-
+                  let body = new FormData(formElement);
                   //console.log(JSON.stringify(body));
-                  this.buttonLabel = 'Submitting...';
+                  this.buttonLabel = 'Saving...';
                   this.loading = true;
                   this.message = '';
 
-                  fetch('/hit', {
-                      method: 'POST',
+                  window.axios.post('/api/process/save',
+                      body,
+                      //body.append('enkripsi', '0812-8888-9999'),
+                      {
                       headers: {
-                          'Content-Type': 'application/json',
-                          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                      },
-                      body: body
+                          'Content-Type': 'application/json'
+                      }
                   })
                       .then((response) => {
                           console.log(JSON.stringify(response));
                           let data = response.data;
-                          this.message = 'Form sucessfully submitted!' + data
+                          //this.message = 'Number ' + data.phone_number + ' successfully saved!'
+                          this.message = ''
                       })
                       .catch((error) => {
-                          this.message = 'Ooops! Something went wrong!'
+                          console.log(JSON.stringify(error));
+                          let data = error.response.data;
+                          let errors = data.errors;
+                          console.log(JSON.stringify(data.errors));
+                          this.message = 'Ooops! Something went wrong!, ' + data.message
                       })
                       .finally(() => {
                           this.loading = false;
-                          this.buttonLabel = 'Submit'
+                          this.buttonLabel = 'Save'
+                      })
+              }
+          }
+      }
+
+      function processAuto() {
+          return {
+              //message: '',
+              loadingAuto: false,
+              buttonAutoLabel: 'Auto',
+              generateData() {
+                  let formElement = document.getElementById("input-data");
+                  let body = new FormData(formElement);
+
+                  //console.log(JSON.stringify(body));
+                  this.buttonAutoLabel = 'Generating...';
+                  this.loadingAuto = true;
+                  this.message = '';
+
+                  window.axios.post('/api/process/auto',
+                      body,
+                      {
+                          headers: {
+                              'Content-Type': 'application/json'
+                          }
+                      }
+                  )
+                      .then((response) => {
+                          console.log(JSON.stringify(response));
+                          let data = response.data;
+                          //this.message = '500 Random Number successfully generated!'
+                          this.message = ''
+                      })
+                      .catch((error) => {
+                          console.log(JSON.stringify(error));
+                          let data = error.response.data;
+                          let errors = data.errors;
+                          console.log(JSON.stringify(data.errors));
+                          this.message = 'Ooops! Something went wrong!, ' + data.message
+                      })
+                      .finally(() => {
+                          this.loadingAuto = false;
+                          this.buttonAutoLabel = 'Auto'
                       })
               }
           }

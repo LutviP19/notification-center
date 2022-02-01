@@ -17,8 +17,8 @@ class CreateUserdatasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('phone_number');
-            $table->enum('provider', ['telkomsel', 'xl', 'tri']);
-            $table->enum('number_type', ['ganjil', 'genap']);
+            $table->enum('provider', ['undefined', 'telkomsel', 'xl', 'tri']);
+            $table->enum('number_type', ['undefined', 'ganjil', 'genap']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -18,17 +18,21 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 // Channels
-Broadcast::channel('proses-data', function ($user) {
-    return true;
-});
-
-//Broadcast::channel('proses-data', ProsesDataChannel::class);
-//Broadcast::channel('collected-fish-channel', CollectedFishObserver::class);
-
-// test
-Broadcast::channel('cek-nomer', function ($user) {
+Broadcast::channel('user-channel', function ($user) {
     return true;
 });
 Broadcast::channel('notification-send', function ($user) {
     return true;
 });
+Broadcast::channel('status-liked', function ($user) {
+    return true;
+});
+Broadcast::channel('test', function ($user) {
+    return true;
+});
+
+
+// Example Code
+//Broadcast::channel('proses-data', ProsesDataChannel::class);
+//Broadcast::channel('collected-fish-channel', CollectedFishObserver::class);
+

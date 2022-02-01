@@ -8,23 +8,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StatusLiked implements ShouldBroadcastNow
+class TestEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $username;
-
-    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($username)
+    public function __construct()
     {
-        $this->username = $username;
-        $this->message = "{$username} liked your status";
+        //
     }
 
     /**
@@ -34,17 +29,28 @@ class StatusLiked implements ShouldBroadcastNow
      */
     public function broadcastAs()
     {
-        return 'StatusLiked';
+        return 'TestEvent';
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return Channel|array
+     * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
-        //return ['status-liked'];
-        return new Channel('status-liked');
+        return new Channel('test');
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return [
+            'test' => 'OK'
+        ];
     }
 }
