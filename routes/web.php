@@ -44,8 +44,9 @@ require __DIR__ . '/auth.php';
 
 /* Testing Broadcast */
 Route::get('form', [TestController::class, 'form']);
-Route::get('enkripsi', [TestController::class, 'enkripsi']);
 Route::get('auto', [TestController::class, 'auto']);
+Route::get('enkripsi', [TestController::class, 'enkripsi']);
+Route::get('crypto', [TestController::class, 'crypto']);
 
 Route::post('hit', [TestController::class, 'hit']);
 

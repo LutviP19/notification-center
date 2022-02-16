@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Laravel\Passport\RefreshTokenRepository;
 
 class GoogleController extends Controller
 {
@@ -38,7 +39,13 @@ class GoogleController extends Controller
 
                 Auth::login($finduser);
 
-                return redirect()->intended('dashboard');
+                $response = [
+                    'user' => Auth::user(),
+                    'token' => Auth::user()->createToken('userToken')->accessToken,
+                ];
+                return redirect()
+                ->with($response)
+                ->intended('dashboard');
 
             } else {
                 $newUser = User::create([
@@ -50,12 +57,18 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect()->intended('dashboard');
+                $response = [
+                    'user' => Auth::user(),
+                    'token' => Auth::user()->createToken('userToken')->accessToken,
+                ];
+                return redirect()
+                ->with($response)
+                ->intended('dashboard');
             }
 
         } catch (Exception $e) {
             Log::error($e);
-            dump($e);
+            //dump($e);
         }
     }
 }

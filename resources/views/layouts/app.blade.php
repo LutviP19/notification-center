@@ -17,14 +17,17 @@
   <script type="text/javascript">
       window.laravel_echo_hostname = '{{ env('LARAVEL_ECHO_HOSTNAME') }}';
       window.laravel_echo_port = '{{env("LARAVEL_ECHO_PORT")}}';
+      window.key = '{{ env('MIX_OPENSSL_SECRET_KEY') }}';
+      window.iv = '{{ env('MIX_OPENSSL_SECRET_IV') }}';
 
-          <?php $user = Auth::user(); ?>
+      <?php $user = Auth::user(); ?>
       var userId = "{{ $user->id }}";
       var userName = "{{ $user->name }}";
   </script>
   <script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
-  <script src="{{ asset('js/encryption.js') }}" defer></script>
+  <script src="{{ asset('js/crypto-js.min.js') }}"></script>
+  <script src="{{ asset('js/encryption.js') }}"></script>
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
@@ -42,7 +45,6 @@
     {{ $slot }}
   </main>
 </div>
-{{--<script src="./node_modules/@themesberg/flowbite/dist/flowbite.bundle.js"></script>--}}
-<script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.bundle.js"></script>
+<script src="{{ asset('js/flowbite.bundle.js') }}"></script>
 </body>
 </html>

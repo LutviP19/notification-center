@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Helpers;
 use App\Http\Requests\StoreSaveRequest;
 use Illuminate\Http\Request;
@@ -14,11 +15,21 @@ class ProcessController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
+        $number = Helpers::encrypt_decrypt_js('decrypt', $request->enc_phone);
         $output = array_merge($validated, [
-            //'enkripsi' => Helpers::encrypt_decrypt('decrypt',$request->enkripsi)
+            'phone_number' => $number,
+            'number_type' => Helpers::ganjilGenap($number),
+            'providers' => Helpers::setProvider($number),
         ]);
 
-        return response()->json($output);
+        $data = [
+            'user_id' => Auth::id(),
+            'providers' => Helpers::setProvider($number),
+            'phone_number' => $number,
+            'number_type' => Helpers::ganjilGenap($number),
+        ];
+
+        return response()->json($data);
     }
 
     public function auto(Request $request)

@@ -25,27 +25,20 @@ class Helpers
      * @param string $plaintext
      * @return string|null
      */
-    static function encrypt_decrypt($action, $plaintext)
+    static function encrypt_decrypt_js($action, $plaintext)
     {
         $output = null;
         $key = env('OPENSSL_SECRET_KEY');
-        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
+        $iv = env('OPENSSL_SECRET_IV');
+        $method = env('OPENSSL_AES_METHOD_JS');
 
         if ($action == 'encrypt') {
-            $iv = env('OPENSSL_SECRET_IV');  // max length 16 characters
-            $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-            $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-            $output = base64_encode($iv . $hmac . $ciphertext_raw);
-        } else if ($action == 'decrypt') {
-            $c = base64_decode($plaintext);
-            $iv = substr($c, 0, $ivlen);
-            $hmac = substr($c, $ivlen, $sha2len = 32);
-            $ciphertext_raw = substr($c, $ivlen + $sha2len);
-            $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-            $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-            if (hash_equals($hmac, $calcmac)) {
-                $output = $original_plaintext;
-            }
+            $e = openssl_encrypt( $plaintext, $method, hex2bin( $key ), 0, hex2bin( $iv ));
+            $output = bin2hex( base64_decode( $e ));
+        }
+        else if ($action == 'decrypt') {
+            $e = base64_encode(hex2bin($plaintext));
+            $output = openssl_decrypt( $e, $method, hex2bin( $key ), 0, hex2bin( $iv ));
         }
 
         return $output;
@@ -58,20 +51,48 @@ class Helpers
         }
 
         //$iv_size        = openssl_cipher_iv_length(AES_METHOD);
-        $iv = env('OPENSSL_SECRET_IV');
-        $ciphertext = openssl_encrypt($message, AES_METHOD, env('OPENSSL_SECRET_KEY'), OPENSSL_RAW_DATA, $iv);
+        $iv = hex2bin( env('OPENSSL_SECRET_IV'));
+        $ciphertext = openssl_encrypt($message, env('OPENSSL_AES_METHOD'), hex2bin( env('OPENSSL_SECRET_KEY')), OPENSSL_RAW_DATA, $iv);
         $ciphertext_hex = bin2hex($ciphertext);
         $iv_hex = bin2hex($iv);
-        return "$iv_hex:$ciphertext_hex";
+        //return "$iv_hex:$ciphertext_hex";
+        return $ciphertext_hex;
+
+
+        /*$key = hex2bin( env('OPENSSL_SECRET_KEY'));
+        $cipher = env('OPENSSL_AES_METHOD');
+        $iv = hex2bin( env('OPENSSL_SECRET_IV'));  // max length 16 characters
+        $ciphertext_raw = openssl_encrypt($message, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+
+        return base64_encode($iv . $hmac . $ciphertext_raw);*/
     }
 
     static function decrypt($ciphered)
     {
-        //$iv_size    = openssl_cipher_iv_length("AES-128-CBC");
-        $data = explode(":", $ciphered);
-        $iv = hex2bin($data[0]);
-        $ciphertext = hex2bin($data[1]);
-        return openssl_decrypt($ciphertext, "AES-128-CBC", env('OPENSSL_SECRET_KEY'), OPENSSL_RAW_DATA, $iv);
+        $ivlen = openssl_cipher_iv_length($cipher = env('OPENSSL_AES_METHOD'));
+        $c = hex2bin($ciphered);
+        $iv = hex2bin( env('OPENSSL_SECRET_IV'));
+        //$data = explode(":", $ciphered);
+        //$iv = hex2bin($data[0]);
+        //$ciphertext = hex2bin($data[1]);
+        return openssl_decrypt($c, env('OPENSSL_AES_METHOD'), hex2bin( env('OPENSSL_SECRET_KEY')), OPENSSL_RAW_DATA, $iv);
+
+
+        /*$output = null;
+        $ivlen = openssl_cipher_iv_length($cipher = env('OPENSSL_AES_METHOD'));
+        $key = hex2bin( env('OPENSSL_SECRET_KEY'));
+        $c = base64_decode($ciphered);
+        $iv = substr($c, 0, $ivlen);
+        $hmac = substr($c, $ivlen, $sha2len = 32);
+        $ciphertext_raw = substr($c, $ivlen + $sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+        if (hash_equals($hmac, $calcmac)) {
+            $output = $original_plaintext;
+        }
+
+        return $output;*/
     }
 
     static function randomNumberSequence($requiredLength = 7, $highestDigit = 8)

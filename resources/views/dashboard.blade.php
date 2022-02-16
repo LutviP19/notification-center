@@ -78,6 +78,7 @@
                         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="processForm()"
                         @submit.prevent="submitData">
                     @csrf
+                    <input type="hidden" name="enc_phone" id="enc-phone">
                     <div class="mb-4">
                       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         No Handphone
@@ -201,8 +202,16 @@
     </div>
   </div>
 
-  <script>
-      //console.log(encrypt_data('0812-8888-9999'));
+  <script type="text/javascript">
+      //test();
+
+      /* window.axios.get('/sanctum/csrf-cookie').then(response => {
+        console.log(JSON.stringify(response));
+      }); */
+    @if (session('user') && session('jwt'))
+        localStorage.setItem('user', JSON.stringify({{ session('user') }}))
+        localStorage.setItem('jwt', {{ session('jwt') }})
+    @endif
 
       function processForm() {
           return {
@@ -211,36 +220,42 @@
               buttonLabel: 'Save',
               submitData() {
                   let formElement = document.getElementById("input-data");
+                  let phoneNumber = document.getElementById("phone-number");
+                  let encNumber = document.getElementById("enc-phone");
+                  encNumber.value = encrypt_data(phoneNumber.value);
+                  //phoneNumber.value = '';
                   let body = new FormData(formElement);
                   //console.log(JSON.stringify(body));
                   this.buttonLabel = 'Saving...';
                   this.loading = true;
                   this.message = '';
+                  //console.log(encrypt_data('0812-8888-9999'));
 
                   window.axios.post('/api/process/save',
-                      body,
-                      //body.append('enkripsi', '0812-8888-9999'),
-                      {
-                      headers: {
-                          'Content-Type': 'application/json'
-                      }
-                  })
+                            body,
+                            //body.append('enkripsi', '0812-8888-9999'),
+                            {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                      })
                       .then((response) => {
-                          console.log(JSON.stringify(response));
-                          let data = response.data;
-                          //this.message = 'Number ' + data.phone_number + ' successfully saved!'
-                          this.message = ''
+                            //console.log(JSON.stringify(response));
+                            let data = response.data;
+                            console.log(JSON.stringify(data));
+                            //this.message = 'Number ' + data.phone_number + ' successfully saved!'
+                            this.message = ''
                       })
                       .catch((error) => {
-                          console.log(JSON.stringify(error));
-                          let data = error.response.data;
-                          let errors = data.errors;
-                          console.log(JSON.stringify(data.errors));
-                          this.message = 'Ooops! Something went wrong!, ' + data.message
+                            console.log(JSON.stringify(error));
+                            let data = error.response.data;
+                            let errors = data.errors;
+                            console.log(JSON.stringify(data.errors));
+                            this.message = 'Ooops! Something went wrong!, ' + data.message
                       })
                       .finally(() => {
-                          this.loading = false;
-                          this.buttonLabel = 'Save'
+                            this.loading = false;
+                            this.buttonLabel = 'Save'
                       })
               }
           }

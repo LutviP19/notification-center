@@ -12,7 +12,8 @@
     <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors"/>
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" id="login-form" x-data="processForm()"
+    @submit.prevent="submitData">
     @csrf
 
       <div class="flex justify-center mt-4">
@@ -27,8 +28,12 @@
         <h3>--- OR ---</h3>
       </div>
 
+      <div class="mt-4">
+        <p x-text="message"></p>
+      </div>
+
       <!-- Email Address -->
-      <div>
+      <div class="mt-4">
         <x-label for="email" :value="__('Email')"/>
 
         <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
@@ -68,5 +73,37 @@
       </div>
 
     </form>
+    <script type="text/javascript">
+        function processForm() {
+          return {
+              message: '',
+              submitData() {
+                  let formElement = document.getElementById("login-form");
+                  let body = new FormData(formElement);
+                  window.axios.post('api/login', body )
+                      .then((response) => {
+                            //console.log(JSON.stringify(response));
+                            let data = response.data;
+                            console.log(JSON.stringify(data));
+
+                            this.message = ''
+                            localStorage.setItem('user', JSON.stringify(data.user))
+                            localStorage.setItem('jwt', data.token)
+                            formElement.submit();
+                      })
+                      .catch((error) => {
+                            console.log(JSON.stringify(error));
+                            let data = error.response.data;
+                            let errors = data.error_msg;
+                            console.log(JSON.stringify(data));
+                            this.message = 'Ooops! Something went wrong!, <br>' + errors;
+                      })
+                      .finally(() => {
+
+                      })
+              }
+          }
+      }
+    </script>
   </x-auth-card>
 </x-guest-layout>
