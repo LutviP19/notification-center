@@ -5,7 +5,7 @@
         </h2>
 
         <div id="toast-default"
-            class="absolute top-5 right-5 flex items-center w-full max-w-xs p-4 divide-gray-200 rounded-lg shadow text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+            class="absolute top-5 right-5 flex items-center w-full max-w-xs p-4 divide-gray-200 rounded-lg shadow text-sm text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800"
             role="alert">
             <div
                 class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
@@ -43,7 +43,7 @@
                             otomatis terisi dan akan ada generate 500 random No hp random Provider</p>
                         <div class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
                             <a href="#"
-                                class="w-full sm:w-auto flex bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                 <svg class="mr-3 w-7 h-7" aria-hidden="true" focusable="false" data-prefix="fab"
                                     data-icon="apple" role="img" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 384 512">
@@ -57,7 +57,7 @@
                                 </div>
                             </a>
                             <a href="#"
-                                class="w-full sm:w-auto flex bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                 <svg class="mr-3 w-7 h-7" aria-hidden="true" focusable="false" data-prefix="fab"
                                     data-icon="google-play" role="img" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 512 512">
