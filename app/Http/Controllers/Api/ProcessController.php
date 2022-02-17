@@ -15,7 +15,7 @@ class ProcessController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $number = Helpers::encrypt_decrypt_js('decrypt', $request->enc_phone);
+        $number = Helpers::encrypt_decrypt_js('decrypt', $request->phone_number);
         $output = array_merge($validated, [
             'phone_number' => $number,
             'number_type' => Helpers::ganjilGenap($number),
@@ -25,7 +25,7 @@ class ProcessController extends Controller
         $data = [
             'user_id' => Auth::id(),
             'providers' => Helpers::setProvider($number),
-            'phone_number' => $number,
+            'phone_number' => $request->phone_number,
             'number_type' => Helpers::ganjilGenap($number),
         ];
 
@@ -40,7 +40,7 @@ class ProcessController extends Controller
             $data[] = [
                 'user_id' => Auth::id(),
                 'providers' => Helpers::setProvider($number),
-                'phone_number' => $number,
+                'phone_number' => Helpers::encrypt_decrypt_js('encrypt', $number),
                 'number_type' => Helpers::ganjilGenap($number),
             ];
         }

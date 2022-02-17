@@ -1,6 +1,26 @@
 window._ = require('lodash');
 
 /**
+ *  Encryptions
+ */
+var key = process.env.MIX_OPENSSL_SECRET_KEY;
+var iv = process.env.MIX_OPENSSL_SECRET_IV;
+var CryptoJS = require("crypto-js");
+
+function encrypt_data(data) {
+    let encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), CryptoJS.enc.Hex.parse(key), { iv: CryptoJS.enc.Hex.parse(iv) });
+
+    return encrypted.ciphertext.toString();
+}
+
+function decrypt_data(data) {
+    cipherParams = CryptoJS.lib.CipherParams.create({ ciphertext: CryptoJS.enc.Hex.parse(data) });
+    let decrypted = CryptoJS.AES.decrypt(cipherParams, CryptoJS.enc.Hex.parse(key), { iv: CryptoJS.enc.Hex.parse(iv) });
+
+    return decrypted.toString(CryptoJS.enc.Utf8);
+}
+
+/**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
@@ -16,6 +36,53 @@ window.axios.defaults.headers.common = {
     'Authorization': 'Bearer ' + localStorage.getItem('jwt')
 };
 //window.axios.defaults.withCredentials = true;
+
+// set Request
+// Add a request interceptor
+window.axios.interceptors.request.use(function (config) {
+    //console.log(config)
+    if(config.data.length === 1) {
+        if (config.data.phone_number !== null) {
+            config.data.phone_number = encrypt_data(config.data.phone_number)
+        }
+    }
+
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
+// Add a response interceptor
+window.axios.interceptors.response.use(function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    //console.log(response.data.length)
+    if(response.data.length === 1) {
+        if (response.data.phone_number !== null) {
+            response.data.phone_number = decrypt_data(response.data.phone_number)
+        }
+    } else {
+        const reformattedArray = response.data.map(item => {
+            var temp = Object.assign({}, item);
+            if (item.phone_number !== null) {
+                temp.phone_number = decrypt_data(temp.phone_number);
+            }
+
+            return temp;
+        });
+
+        //console.log(reformattedArray)
+        return reformattedArray;
+    }
+
+    return response;
+}, function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+});
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

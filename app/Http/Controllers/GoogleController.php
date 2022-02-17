@@ -39,14 +39,18 @@ class GoogleController extends Controller
 
                 Auth::login($finduser);
 
+                $user = Auth::user();
                 $response = [
-                    'user' => Auth::user(),
-                    'token' => Auth::user()->createToken('userToken')->accessToken,
+                    'user' => [
+                            'id' => Helpers::encrypt_decrypt_js('encrypt', $user->id),
+                            'name' => $user->name,
+                            'email' => Helpers::encrypt_decrypt_js('encrypt', $user->email),
+                            'google_id' => $user->google_id ?: Helpers::encrypt_decrypt_js('encrypt', $user->google_id),
+                    ],
+                    'token' => $user->createToken('userToken')->accessToken,
                 ];
-                return redirect()
-                ->with($response)
-                ->intended('dashboard');
 
+                return redirect('dashboard')->with($response);
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
@@ -57,13 +61,18 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
 
+                $user = Auth::user();
                 $response = [
-                    'user' => Auth::user(),
-                    'token' => Auth::user()->createToken('userToken')->accessToken,
+                    'user' => [
+                            'id' => Helpers::encrypt_decrypt_js('encrypt', $user->id),
+                            'name' => $user->name,
+                            'email' => Helpers::encrypt_decrypt_js('encrypt', $user->email),
+                            'google_id' => $user->google_id ?: Helpers::encrypt_decrypt_js('encrypt', $user->google_id),
+                    ],
+                    'token' => $user->createToken('userToken')->accessToken,
                 ];
-                return redirect()
-                ->with($response)
-                ->intended('dashboard');
+
+                return redirect('dashboard')->with($response);
             }
 
         } catch (Exception $e) {

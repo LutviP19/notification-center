@@ -19,7 +19,12 @@ class UserController extends Controller
             $status = 200;
             $user = Auth::user();
             $response = [
-                'user' => $user,
+                'user' => [
+                        'id' => Helpers::encrypt_decrypt_js('encrypt', $user->id),
+                        'name' => $user->name,
+                        'email' => Helpers::encrypt_decrypt_js('encrypt', $user->email),
+                        'google_id' => $user->google_id ?: Helpers::encrypt_decrypt_js('encrypt', $user->google_id),
+                ],
                 'token' => $user->createToken('userToken')->accessToken,
             ];
         }else{
@@ -53,9 +58,14 @@ class UserController extends Controller
         $user = User::create($input);
 
         $response = [
-            'user' => $user,
-            'token' => $user->createToken('userToken')->accessToken,
-        ];
+                'user' => [
+                        'id' => Helpers::encrypt_decrypt_js('encrypt', $user->id),
+                        'name' => $user->name,
+                        'email' => Helpers::encrypt_decrypt_js('encrypt', $user->email),
+                        'google_id' => $user->google_id ?: Helpers::encrypt_decrypt_js('encrypt', $user->google_id),
+                ],
+                'token' => $user->createToken('userToken')->accessToken,
+            ];
 
         return response()->json($response, 200);
     }
