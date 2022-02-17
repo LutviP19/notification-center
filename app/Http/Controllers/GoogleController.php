@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Laravel\Passport\RefreshTokenRepository;
+use App\Helpers;
 
 class GoogleController extends Controller
 {
@@ -49,8 +50,9 @@ class GoogleController extends Controller
                     ],
                     'token' => $user->createToken('userToken')->accessToken,
                 ];
+                session($response);
 
-                return redirect('dashboard')->with($response);
+                return redirect()->intended('dashboard');
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
@@ -71,8 +73,9 @@ class GoogleController extends Controller
                     ],
                     'token' => $user->createToken('userToken')->accessToken,
                 ];
+                session($response);
 
-                return redirect('dashboard')->with($response);
+                return redirect()->intended('dashboard');
             }
 
         } catch (Exception $e) {

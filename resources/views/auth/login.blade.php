@@ -12,14 +12,13 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('login') }}" id="login-form" x-data="processForm()"
-            @submit.prevent="submitData">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="flex justify-center mt-4">
                 <div class="">
                     <a href="{{ url('auth/google') }}">
-                        <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+                        <img src="{{ asset('images/btn_google_signin_dark_normal_web.png') }}"
                             alt="">
                     </a>
                 </div>
@@ -27,10 +26,6 @@
 
             <div class="flex justify-center mt-4">
                 <h3>--- OR ---</h3>
-            </div>
-
-            <div class="mt-4">
-                <p x-text="message"></p>
             </div>
 
             <!-- Email Address -->
@@ -73,37 +68,5 @@
             </div>
 
         </form>
-        <script type="text/javascript">
-            function processForm() {
-                return {
-                    message: '',
-                    submitData() {
-                        let formElement = document.getElementById("login-form");
-                        let body = new FormData(formElement);
-                        window.axios.post('api/login', body)
-                            .then((response) => {
-                                //console.log(JSON.stringify(response));
-                                let data = response.data;
-                                console.log(JSON.stringify(data));
-
-                                this.message = ''
-                                localStorage.setItem('user', JSON.stringify(data.user))
-                                localStorage.setItem('jwt', data.token)
-                                formElement.submit();
-                            })
-                            .catch((error) => {
-                                console.log(JSON.stringify(error));
-                                let data = error.response.data;
-                                let errors = data.error_msg;
-                                console.log(JSON.stringify(data));
-                                this.message = 'Ooops! Something went wrong!, <br>' + errors;
-                            })
-                            .finally(() => {
-
-                            })
-                    }
-                }
-            }
-        </script>
     </x-auth-card>
 </x-guest-layout>

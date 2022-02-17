@@ -214,10 +214,6 @@
     </div>
 
     <script type="text/javascript">
-        @if (session('user') && session('jwt'))
-            localStorage.setItem('user', JSON.stringify({{ session('user') }}))
-            localStorage.setItem('jwt', {{ session('jwt') }})
-        @endif
 
         function processForm() {
             return {

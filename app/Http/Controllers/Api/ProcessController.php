@@ -23,7 +23,7 @@ class ProcessController extends Controller
         ]);
 
         $data = [
-            'user_id' => Auth::id(),
+            'user_id' => Helpers::encrypt_decrypt_js('encrypt', Auth::id()),
             'providers' => Helpers::setProvider($number),
             'phone_number' => $request->phone_number,
             'number_type' => Helpers::ganjilGenap($number),
@@ -38,7 +38,7 @@ class ProcessController extends Controller
         for ($i = 0; $i < 500; ++$i) {
             $number = Helpers::numberPrefixes[array_rand(Helpers::numberPrefixes)] . Helpers::randomNumberSequence();
             $data[] = [
-                'user_id' => Auth::id(),
+                'user_id' => Helpers::encrypt_decrypt_js('encrypt', Auth::id()),
                 'providers' => Helpers::setProvider($number),
                 'phone_number' => Helpers::encrypt_decrypt_js('encrypt', $number),
                 'number_type' => Helpers::ganjilGenap($number),

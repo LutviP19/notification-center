@@ -64,6 +64,9 @@ window.axios.interceptors.response.use(function (response) {
             if (item.phone_number !== null) {
                 temp.phone_number = decrypt_data(temp.phone_number);
             }
+            if (item.user_id !== null) {
+                temp.user_id = decrypt_data(temp.user_id);
+            }
 
             return temp;
         });
