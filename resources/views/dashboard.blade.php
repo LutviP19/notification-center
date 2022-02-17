@@ -233,11 +233,11 @@
                     this.loading = true;
                     this.message = '';
 
-                    let body = new FormData(formElement);
-                    /* const body = {
+                    //let body = new FormData(formElement);
+                    const body = {
                         phone_number: phoneNumber.value,
                         provider: provider.value
-                    } */
+                    }
 
                     window.axios.post('/api/process/save',
                             body, {
@@ -274,7 +274,13 @@
                 buttonAutoLabel: 'Auto',
                 generateData() {
                     let formElement = document.getElementById("input-data");
-                    let body = new FormData(formElement);
+                    let phoneNumber = document.getElementById("phone-number");
+                    let provider = document.getElementById("provider");
+                    //let body = new FormData(formElement);
+                    const body = {
+                        generate: true,
+                        total: 500
+                    }
 
                     //console.log(JSON.stringify(body));
                     this.buttonAutoLabel = 'Generating...';
@@ -291,8 +297,8 @@
                         .then((response) => {
                             console.log(JSON.stringify(response));
                             let data = response.data;
-                            //this.message = '500 Random Number successfully generated!'
-                            this.message = ''
+                            this.message = '500 Random Number successfully generated!'
+                            //this.message = ''
                         })
                         .catch((error) => {
                             console.log(JSON.stringify(error));

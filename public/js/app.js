@@ -5538,11 +5538,9 @@ window.axios.defaults.headers.common = {
 // Add a request interceptor
 
 window.axios.interceptors.request.use(function (config) {
-  //console.log(config)
-  if (config.data.length === 1) {
-    if (config.data.phone_number !== null) {
-      config.data.phone_number = encrypt_data(config.data.phone_number);
-    }
+  //console.log(config.data.phone_number)
+  if (config.data.phone_number) {
+    config.data.phone_number = encrypt_data(config.data.phone_number);
   }
 
   return config;
@@ -5554,11 +5552,9 @@ window.axios.interceptors.request.use(function (config) {
 window.axios.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
-  //console.log(response.data.length)
-  if (response.data.length === 1) {
-    if (response.data.phone_number !== null) {
-      response.data.phone_number = decrypt_data(response.data.phone_number);
-    }
+  //console.log(response.data.phone_number !== 'undefined')
+  if (response.data.phone_number) {
+    response.data.phone_number = decrypt_data(response.data.phone_number);
   } else {
     var reformattedArray = response.data.map(function (item) {
       var temp = Object.assign({}, item);
