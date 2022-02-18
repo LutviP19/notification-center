@@ -4,7 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
 
-        <div id="toast-default"
+        {{-- <div id="toast-default"
             class="absolute top-5 right-5 flex items-center w-full max-w-xs p-4 divide-gray-200 rounded-lg shadow text-sm text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800"
             role="alert">
             <div
@@ -27,7 +27,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </button>
-        </div>
+        </div> --}}
 
     </x-slot>
     <div class="py-12">
@@ -101,7 +101,7 @@
                                                     class="block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline capitalize"
                                                     id="provider" name="provider">
                                                     @foreach ($providers as $provider => $val)
-                                                        <option value="{{ $provider }}">{{ $provider }}</option>
+                                                    <option value="{{ $provider }}">{{ $provider }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -213,8 +213,8 @@
         </div>
     </div>
 
+    {{-- <script src="{{ asset('js/flowbite.bundle.js') }}"></script> --}}
     <script type="text/javascript">
-
         function processForm() {
             return {
                 message: '',

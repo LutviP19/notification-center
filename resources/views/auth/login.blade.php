@@ -18,8 +18,7 @@
             <div class="flex justify-center mt-4">
                 <div class="">
                     <a href="{{ url('auth/google') }}">
-                        <img src="{{ asset('images/btn_google_signin_dark_normal_web.png') }}"
-                            alt="">
+                        <img src="{{ asset('images/btn_google_signin_dark_normal_web.png') }}" alt="">
                     </a>
                 </div>
             </div>
@@ -56,10 +55,9 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                        href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
                 @endif
 
                 <x-button class="ml-3">
