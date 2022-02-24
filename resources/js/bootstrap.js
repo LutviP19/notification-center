@@ -62,6 +62,7 @@ window.axios.interceptors.response.use(function (response) {
         }
         if(response.data.user_id !== null) {
             //response.data.user_id = decrypt_data(response.data.user_id)
+            response.data.user_id = encrypt_data(response.data.user_id)
         }
     } else {
         const reformattedArray = response.data.map(item => {
@@ -71,6 +72,7 @@ window.axios.interceptors.response.use(function (response) {
             }
             if (temp.user_id !== null) {
                 //temp.user_id = decrypt_data(temp.user_id);
+                temp.user_id = encrypt_data(temp.user_id);
             }
 
             return temp;

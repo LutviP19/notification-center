@@ -131,7 +131,7 @@
                                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                                         <div class="overflow-hidden shadow-md sm:rounded-lg">
-                                            <table class="min-w-full">
+                                            <table class="min-w-full" id="tblGanjil">
                                                 <thead class="bg-gray-50 dark:bg-gray-700">
                                                     <tr>
                                                         <th scope="col"
@@ -143,7 +143,7 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tblBodyGanjil">
                                                     <!-- Product 1 -->
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td
@@ -172,7 +172,7 @@
                                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                                         <div class="overflow-hidden shadow-md sm:rounded-lg">
-                                            <table class="min-w-full">
+                                            <table class="min-w-full" id="tblGenap">
                                                 <thead class="bg-gray-50 dark:bg-gray-700">
                                                     <tr>
                                                         <th scope="col"
@@ -184,7 +184,7 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tblBodyGenap">
                                                     <!-- Product 1 -->
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td

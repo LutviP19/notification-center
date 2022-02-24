@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
 use stdClass;
 
 class Userdata extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The table associated with the model.
@@ -18,7 +19,7 @@ class Userdata extends Model
      */
     protected $table = 'userdatas';
 
-    public function setUserIdAttribute($value)
+    /* public function setUserIdAttribute($value)
     {
 
     }
@@ -26,7 +27,15 @@ class Userdata extends Model
     public function getUserIdAttribute($value)
     {
 
-    }
+    } */
+
+    /**
+     * Get the author of the post.
+     
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }*/
 
     /**
      * @param stdClass $userdata

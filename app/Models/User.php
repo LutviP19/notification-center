@@ -45,6 +45,6 @@ class User extends Authenticatable
 
     public function userdatas()
     {
-        return $this->hasMany(Userdata::class);
+        return $this->hasMany(Userdata::class, 'user_id', 'id');
     }
 }
