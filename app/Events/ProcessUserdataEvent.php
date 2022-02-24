@@ -4,14 +4,13 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Userdata;
+use App\Helpers;
 
-class ProcessUserdataEvent
+class ProcessUserdataEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -24,6 +23,7 @@ class ProcessUserdataEvent
      */
     public function __construct(Userdata $userdata)
     {
+        $userdata->user_id = Helpers::encrypt_decrypt_js('encrypt', $userdata->user_id);
         $this->userdata = $userdata;
     }
 

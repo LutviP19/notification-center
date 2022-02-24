@@ -51,9 +51,18 @@ Route::get('crypto', [TestController::class, 'crypto']);
 Route::post('hit', [TestController::class, 'hit']);
 
 Route::get('test', function () {
-    event(new App\Events\TestEvent());
-    event(new App\Events\NotificationEvent('Monika'));
+    //event(new App\Events\TestEvent());
+    //event(new App\Events\NotificationEvent('Monika'));
     event(new App\Events\StatusLiked('Linked Someone'));
+
+    $userdata = new App\Models\Userdata();
+    $userdata->user_id = 1;
+    $userdata->phone_number = '0812999900099';
+    $userdata->provider = 'telkomsel';
+    $userdata->number_type = 'ganjil';
+
+    event(new App\Events\ProcessUserdataEvent($userdata));
+    event(new App\Events\ProcessAutoUserdataEvent([collect($userdata)]));
 
     echo "ok";
 });

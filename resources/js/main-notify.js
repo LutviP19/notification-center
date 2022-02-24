@@ -1,15 +1,16 @@
+
 Echo.channel('process-userdata')
     .listen('.ProcessUserdataEvent', (data) => {
         // this is called when the event notification is received...
         //alert(JSON.stringify(data));
-        console.log(JSON.stringify(data));
+        console.log('.ProcessUserdataEvent = ' + JSON.stringify(data));
     });
 
-    Echo.channel('process-auto-userdata')
+Echo.channel('process-auto-userdata')
     .listen('.ProcessAutoUserdataEvent', (data) => {
         // this is called when the event notification is received...
         //alert(JSON.stringify(data));
-        console.log(JSON.stringify(data));
+        console.log('.ProcessAutoUserdataEvent = ' + JSON.stringify(data));
     });
 
 //=== TESTING

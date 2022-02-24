@@ -18,6 +18,12 @@ class Userdata extends Model
      * @var string
      */
     protected $table = 'userdatas';
+    protected $fillable = [
+        'user_id',
+        'phone_number',
+        'provider',
+        'number_type',
+    ];
 
     /* public function setUserIdAttribute($value)
     {
@@ -27,14 +33,6 @@ class Userdata extends Model
     public function getUserIdAttribute($value)
     {
 
-    } */
-
-    /**
-     * Get the author of the post.
-     
-    public function user()
-    {
-        return $this->belongsTo(User::class)->withDefault();
     }*/
 
     /**

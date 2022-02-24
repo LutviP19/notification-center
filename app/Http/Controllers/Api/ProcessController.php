@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Helpers;
+use Illuminate\Support\Str;
 use App\Http\Requests\StoreSaveRequest;
 use App\Http\Requests\StoreAutoRequest;
 use Illuminate\Http\Request;
@@ -20,14 +21,13 @@ class ProcessController extends Controller
         $validated = $request->validated();
 
         $number = Helpers::encrypt_decrypt_js('decrypt', $request->phone_number);
-        /* $output = array_merge($validated, [
-            'phone_number' => $number,
-            'number_type' => Helpers::ganjilGenap($number),
-            'providers' => Helpers::setProvider($number),
-        ]); */
 
+        // Modify std phone number
+        $number = Str::replace('+62', '0', $number);
+        $ignored = ["-", " "];
+        $number = str_replace($ignored, "", $number);
         $data = [
-            //'user_id' => Helpers::encrypt_decrypt_js('encrypt', Auth::id()),            
+            //'user_id' => Helpers::encrypt_decrypt_js('encrypt', Auth::id()),         
             //'phone_number' => $request->phone_number,
             'user_id' => Auth::id(),
             'phone_number' => $number,
@@ -44,7 +44,8 @@ class ProcessController extends Controller
 
 
         ProcessUserdataEvent::dispatch($userdata);
-        $userdata->phone_number = $request->phone_number;
+        $userdata->user_id = Helpers::encrypt_decrypt_js('encrypt', $data['user_id']);
+        $userdata->phone_number = Helpers::encrypt_decrypt_js('encrypt', $data['phone_number']);
         return response()->json($userdata);
     }
 
@@ -66,14 +67,15 @@ class ProcessController extends Controller
             ];
         }
 
-
-        $userdata = Userdata::insertOrIgnore($data);
+        $userdata = [];
+        foreach($data as $row) {
+            $userdata[] = Userdata::create($row);
+        }
         event(new ProcessAutoUserdataEvent($userdata));
 
         $auto = collect($data)->map(function ($item, $key) {
-            //if($key == 'phone_number') {
-                $item['phone_number'] = Helpers::encrypt_decrypt_js('encrypt', $item['phone_number']);
-            //}
+            $item['user_id'] = Helpers::encrypt_decrypt_js('encrypt', $item['user_id']);
+            $item['phone_number'] = Helpers::encrypt_decrypt_js('encrypt', $item['phone_number']);
 
             return $item;
         });

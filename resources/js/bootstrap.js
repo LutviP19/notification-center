@@ -20,6 +20,13 @@ function decrypt_data(data) {
     return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
+encrypt_data.exports = function encrypt_data(data) {
+    return encrypt_data(data);
+}
+decrypt_data.exports = function decrypt_data(data) {
+    return decrypt_data(data);
+}
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -62,7 +69,7 @@ window.axios.interceptors.response.use(function (response) {
         }
         if(response.data.user_id !== null) {
             //response.data.user_id = decrypt_data(response.data.user_id)
-            response.data.user_id = encrypt_data(response.data.user_id)
+            //response.data.user_id = encrypt_data(response.data.user_id)
         }
     } else {
         const reformattedArray = response.data.map(item => {
@@ -72,7 +79,7 @@ window.axios.interceptors.response.use(function (response) {
             }
             if (temp.user_id !== null) {
                 //temp.user_id = decrypt_data(temp.user_id);
-                temp.user_id = encrypt_data(temp.user_id);
+                //temp.user_id = encrypt_data(temp.user_id);
             }
 
             return temp;
