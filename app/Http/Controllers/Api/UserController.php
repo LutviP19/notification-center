@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\RefreshTokenRepository;
+use App\Helpers;
 
 class UserController extends Controller
 {

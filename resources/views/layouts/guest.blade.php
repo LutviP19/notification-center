@@ -14,8 +14,12 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <!-- Scripts
-  <script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script> -->
+    <!-- Scripts -->
+    <script type="text/javascript">
+        window.laravel_echo_hostname = '{{ env('LARAVEL_ECHO_HOSTNAME') }}';
+        window.laravel_echo_port = '{{ env('LARAVEL_ECHO_PORT') }}';
+    </script>
+    <script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 

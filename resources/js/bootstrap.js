@@ -57,15 +57,20 @@ window.axios.interceptors.response.use(function (response) {
     // Do something with response data
     //console.log(response.data.phone_number !== 'undefined')
     if(response.data.phone_number) {
-        response.data.phone_number = decrypt_data(response.data.phone_number)
+        if(response.data.phone_number !== null) {
+            response.data.phone_number = decrypt_data(response.data.phone_number)
+        }
+        if(response.data.user_id !== null) {
+            //response.data.user_id = decrypt_data(response.data.user_id)
+        }
     } else {
         const reformattedArray = response.data.map(item => {
             var temp = Object.assign({}, item);
-            if (item.phone_number !== null) {
+            if (temp.phone_number !== null) {
                 temp.phone_number = decrypt_data(temp.phone_number);
             }
-            if (item.user_id !== null) {
-                temp.user_id = decrypt_data(temp.user_id);
+            if (temp.user_id !== null) {
+                //temp.user_id = decrypt_data(temp.user_id);
             }
 
             return temp;

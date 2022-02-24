@@ -251,9 +251,17 @@
                         .catch((error) => {
                             console.log(JSON.stringify(error));
                             let data = error.response.data;
-                            let errors = data.errors;
+                            var errors = data.errors;
                             console.log(JSON.stringify(data.errors));
-                            this.message = 'Ooops! Something went wrong!, ' + data.message
+                            var errMsg = '';
+                            if(errors) {
+                                errors.map(item => {
+                                    var temp = Object.assign({}, item);
+                                    if(item.phone_number[0])
+                                    errMsg += item.phone_number[0]
+                                });
+                            }
+                            this.message = 'Ooops! Something went wrong!, ' + data.message + errMsg
                         })
                         .finally(() => {
                             this.loading = false;
