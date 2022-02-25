@@ -3,6 +3,9 @@
 use App\Helpers;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\KlasemenController;
+use App\Http\Controllers\KotakKatikController;
+use App\Http\Controllers\PohonFaktorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +52,11 @@ Route::get('enkripsi', [TestController::class, 'enkripsi']);
 Route::get('crypto', [TestController::class, 'crypto']);
 
 Route::post('hit', [TestController::class, 'hit']);
+
+/*============*/
+Route::get('klasmen', [KlasemenController::class, 'index']);
+Route::get('kk', [KotakKatikController::class, 'index']);
+Route::get('pp', [PohonFaktorController::class, 'index']);
 
 Route::get('test', function () {
     //event(new App\Events\TestEvent());
