@@ -1,7 +1,6 @@
-require('./bootstrap');
+window.mainjs = require('./bootstrap');
 require('./laravel-echo-setup');
 require('./main-notify');
-
 
 import Alpine from 'alpinejs';
 

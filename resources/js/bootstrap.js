@@ -20,10 +20,10 @@ function decrypt_data(data) {
     return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
-encrypt_data.exports = function encrypt_data(data) {
+export function encrypt_datax(data) {
     return encrypt_data(data);
 }
-decrypt_data.exports = function decrypt_data(data) {
+export function decrypt_datax(data) {
     return decrypt_data(data);
 }
 

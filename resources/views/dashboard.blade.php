@@ -4,8 +4,12 @@
             {{ __('Dashboard') }}
         </h2>
 
-        {{-- <div id="toast-default"
-            class="absolute top-5 right-5 flex items-center w-full max-w-xs p-4 divide-gray-200 rounded-lg shadow text-sm text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800"
+        <audio id="notifAudio">
+            <source src="{{ asset('notification.wav') }}" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+        <div style="display:none;" id="toast-default"
+            class="fixed top-5 right-5 flex items-center w-full max-w-xs p-4 divide-gray-200 rounded-lg shadow text-sm text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800"
             role="alert">
             <div
                 class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
@@ -15,11 +19,11 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <div class="ml-3 text-sm font-normal">Set yourself free.</div>
+            <div id="toast-text-default" class="ml-3 text-sm font-normal">Set yourself free.</div>
 
             <button type="button"
                 class="float-right ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-                data-collapse-toggle="toast-default" aria-label="Close">
+                onclick="showMyToast()" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -27,7 +31,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </button>
-        </div> --}}
+        </div>
 
     </x-slot>
     <div class="py-12">
@@ -125,8 +129,8 @@
                             </div>
                         </div>
 
-                        <div class="basis-1/4">
-                            <div class="font-bold text-xl mb-3">Output Ganjil</div>
+                        <div class="basis-1/4 px-2">
+                            <div class="font-bold text-xl mb-3 text-center py-3">Output Ganjil</div>
                             <div class="flex flex-col">
                                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
@@ -144,7 +148,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tblBodyGanjil">
-                                                    <!-- Product 1 -->
+                                                    <!-- Product 1
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -157,7 +161,7 @@
                                                             <a href="#"
                                                                 class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -166,8 +170,8 @@
                             </div>
                         </div>
 
-                        <div class="basis-1/4">
-                            <div class="font-bold text-xl mb-3">Output Genap</div>
+                        <div class="basis-1/4 px-2">
+                            <div class="font-bold text-xl mb-3 text-center py-3">Output Genap</div>
                             <div class="flex flex-col">
                                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
@@ -185,7 +189,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tblBodyGenap">
-                                                    <!-- Product 1 -->
+                                                    <!-- Product 1
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -198,7 +202,7 @@
                                                             <a href="#"
                                                                 class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -215,6 +219,15 @@
 
     {{-- <script src="{{ asset('js/flowbite.bundle.js') }}"></script> --}}
     <script type="text/javascript">
+        function showMyToast() {
+            var x = document.getElementById('toast-default');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+
         function processForm() {
             return {
                 message: '',
@@ -243,25 +256,29 @@
                             })
                         .then((response) => {
                             //console.log(JSON.stringify(response));
-                            let data = response.data;
-                            console.log(JSON.stringify(data));
-                            //this.message = 'Number ' + data.phone_number + ' successfully saved!'
-                            this.message = ''
+                            if(response.data) {
+                                let data = response.data;
+                                console.log(JSON.stringify(data));
+                                //this.message = 'Number ' + data.phone_number + ' successfully saved!'
+                                this.message = ''
+                            }
                         })
                         .catch((error) => {
-                            console.log(JSON.stringify(error));
-                            let data = error.response.data;
-                            var errors = data.errors;
-                            console.log(JSON.stringify(data.errors));
-                            var errMsg = '';
-                            if(errors) {
-                                errors.map(item => {
-                                    var temp = Object.assign({}, item);
-                                    if(item.phone_number[0])
-                                    errMsg += item.phone_number[0]
-                                });
-                            }
-                            this.message = 'Ooops! Something went wrong!, ' + data.message + errMsg
+                            //console.log(JSON.stringify(error));
+                            if(error.length) {
+                                let data = error.response.data;
+                                var errors = data.errors;
+                                console.log(JSON.stringify(data.errors));
+                                var errMsg = '';
+                                if(errors) {
+                                    errors.map(item => {
+                                        var temp = Object.assign({}, item);
+                                        if(item.phone_number[0])
+                                        errMsg += item.phone_number[0]
+                                    });
+                                }
+                                this.message = 'Ooops! Something went wrong!, ' + data.message + errMsg
+                            }                            
                         })
                         .finally(() => {
                             this.loading = false;
@@ -306,10 +323,12 @@
                         })
                         .catch((error) => {
                             console.log(JSON.stringify(error));
-                            /* let data = error.response.data;
-                            let errors = data.errors;
-                            console.log(JSON.stringify(data.errors));
-                            this.message = 'Ooops! Something went wrong!, ' + data.message */
+                            if(error.length) {
+                                /* let data = error.response.data;
+                                let errors = data.errors;
+                                console.log(JSON.stringify(data.errors));
+                                this.message = 'Ooops! Something went wrong!, ' + data.message */
+                            }
                         })
                         .finally(() => {
                             this.loadingAuto = false;
