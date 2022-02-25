@@ -148,11 +148,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tblBodyGanjil">
-                                                    <!-- Product 1
+                                                    <!-- Data DB -->
+                                                    @foreach($numGanjil as $item)
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            0812-8888-7777
+                                                            {{ $item->phone_number }}
                                                         </td>
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
@@ -161,7 +162,8 @@
                                                             <a href="#"
                                                                 class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
                                                         </td>
-                                                    </tr> -->
+                                                    </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -189,11 +191,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tblBodyGenap">
-                                                    <!-- Product 1
+                                                    <!-- Data DB -->
+                                                    @foreach($numGenap as $item)
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            0812-8888-7777
+                                                            {{ $item->phone_number }}
                                                         </td>
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
@@ -202,7 +205,8 @@
                                                             <a href="#"
                                                                 class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
                                                         </td>
-                                                    </tr> -->
+                                                    </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

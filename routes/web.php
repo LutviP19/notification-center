@@ -29,7 +29,10 @@ Route::get('/welcome', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
-        'providers' => Helpers::providers]);
+        'providers' => Helpers::providers,
+        'numGanjil' => App\Models\Userdata::where('number_type', 'ganjil')->get(),
+        'numGenap' => App\Models\Userdata::where('number_type', 'genap')->get(),
+    ]);
 })->middleware(['auth'])->name('dashboard');
 
 Route::prefix('auth')->group(function () {
