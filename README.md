@@ -38,8 +38,9 @@ Open terminal, then type:
 - php artisan generate:key
 - php artisan migrate
 - php artisan passport:install --uuids
+- php artisan passport:client --personal
 
-.ENV setup
+.ENV setup:
 
 copy
 
