@@ -80,15 +80,17 @@
                     <!-- columns -->
                     <div class="flex flex-row mb-4">
                         <div class="basis-1/2">
-                            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                            <div class="mt-8 max-w-sm rounded overflow-hidden shadow-lg">
                                 <div class="px-6 py-4">
                                     <div class="font-bold text-xl mb-2">Data No Handphone</div>
                                     <form name="input-data" id="input-data" action="/api/process/save" method="POST"
-                                        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="processForm()"
-                                        @submit.prevent="submitData">
+                                        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-gray-800 dark:border-gray-700"
+                                        x-data="processForm()" @submit.prevent="submitData">
                                         @csrf
                                         <div class="mb-4">
-                                            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                                            <label
+                                                class="block text-gray-500 sm:text-lg dark:text-gray-400 text-sm font-bold mb-2"
+                                                for="username">
                                                 No Handphone
                                             </label>
                                             <input
@@ -97,7 +99,9 @@
                                                 placeholder="No Handphone">
                                         </div>
                                         <div class="mb-6">
-                                            <label class="block text-gray-700 text-sm font-bold mb-2" for="provider">
+                                            <label
+                                                class="block text-gray-500 sm:text-lg dark:text-gray-400  text-sm font-bold mb-2"
+                                                for="provider">
                                                 Provider
                                             </label>
                                             <div class="relative">
@@ -105,7 +109,7 @@
                                                     class="block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline capitalize"
                                                     id="provider" name="provider">
                                                     @foreach ($providers as $provider => $val)
-                                                    <option value="{{ $provider }}">{{ $provider }}</option>
+                                                        <option value="{{ $provider }}">{{ $provider }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -149,20 +153,21 @@
                                                 </thead>
                                                 <tbody id="tblBodyGanjil">
                                                     <!-- Data DB -->
-                                                    @foreach($numGanjil as $item)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td
-                                                            class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            {{ $item->phone_number }}
-                                                        </td>
-                                                        <td
-                                                            class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                                                            <a href="#"
-                                                                class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
-                                                            <a href="#"
-                                                                class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($numGanjil as $item)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td
+                                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {{ $item->phone_number }}
+                                                            </td>
+                                                            <td
+                                                                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                                                                <a href="#"
+                                                                    class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
+                                                                <a href="#"
+                                                                    class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -192,20 +197,21 @@
                                                 </thead>
                                                 <tbody id="tblBodyGenap">
                                                     <!-- Data DB -->
-                                                    @foreach($numGenap as $item)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td
-                                                            class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            {{ $item->phone_number }}
-                                                        </td>
-                                                        <td
-                                                            class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                                                            <a href="#"
-                                                                class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
-                                                            <a href="#"
-                                                                class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($numGenap as $item)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td
+                                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                {{ $item->phone_number }}
+                                                            </td>
+                                                            <td
+                                                                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                                                                <a href="#"
+                                                                    class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Edit</a>
+                                                                <a href="#"
+                                                                    class="text-red-600 hover:text-red-900 dark:text-red-500 dark:hover:underline">Delete</a>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -221,7 +227,80 @@
         </div>
     </div>
 
-    {{-- <script src="{{ asset('js/flowbite.bundle.js') }}"></script> --}}
+    <!-- Modal Form -->
+    <div class="flex flex-row mb-4">
+        <button
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button" data-modal-toggle="authentication-modal">
+            Toggle modal
+        </button>
+    </div>
+
+    <div id="authentication-modal" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+        <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex justify-end p-2">
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        data-modal-toggle="authentication-modal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our
+                        platform</h3>
+                    <div>
+                        <label for="email"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                            email</label>
+                        <input type="email" name="email" id="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            placeholder="name@company.com" required="">
+                    </div>
+                    <div>
+                        <label for="password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                            password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            required="">
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="remember" aria-describedby="remember" type="checkbox"
+                                    class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                                    required="">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="remember"
+                                    class="font-medium text-gray-900 dark:text-gray-300">Remember
+                                    me</label>
+                            </div>
+                        </div>
+                        <a href="#"
+                            class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost
+                            Password?</a>
+                    </div>
+                    <button type="submit"
+                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login
+                        to your account</button>
+                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                        Not registered? <a href="#"
+                            class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         function showMyToast() {
             var x = document.getElementById('toast-default');
@@ -231,6 +310,8 @@
                 x.style.display = 'none';
             }
         }
+
+        toggleModal('authentication-modal', true);
 
         function processForm() {
             return {
@@ -260,7 +341,7 @@
                             })
                         .then((response) => {
                             //console.log(JSON.stringify(response));
-                            if(response.data) {
+                            if (response.data) {
                                 let data = response.data;
                                 console.log(JSON.stringify(data));
                                 //this.message = 'Number ' + data.phone_number + ' successfully saved!'
@@ -269,20 +350,20 @@
                         })
                         .catch((error) => {
                             //console.log(JSON.stringify(error));
-                            if(error.length) {
+                            if (error.length) {
                                 let data = error.response.data;
                                 var errors = data.errors;
                                 console.log(JSON.stringify(data.errors));
                                 var errMsg = '';
-                                if(errors) {
+                                if (errors) {
                                     errors.map(item => {
                                         var temp = Object.assign({}, item);
-                                        if(item.phone_number[0])
-                                        errMsg += item.phone_number[0]
+                                        if (item.phone_number[0])
+                                            errMsg += item.phone_number[0]
                                     });
                                 }
                                 this.message = 'Ooops! Something went wrong!, ' + data.message + errMsg
-                            }                            
+                            }
                         })
                         .finally(() => {
                             this.loading = false;
@@ -327,7 +408,7 @@
                         })
                         .catch((error) => {
                             console.log(JSON.stringify(error));
-                            if(error.length) {
+                            if (error.length) {
                                 /* let data = error.response.data;
                                 let errors = data.errors;
                                 console.log(JSON.stringify(data.errors));
