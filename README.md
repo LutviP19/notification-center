@@ -6,7 +6,7 @@
 
 ## About This Project
 
-This is a web application build with Laravel framework, focused on backend side and end-to-end encryption approach. If you want to learn more about Laravel Passport and OpenSSL encryption this project maybe useful to you for researching and learning. In this project was implemented of some Laravel modules, such as:
+This is a web application build with Laravel framework, focused on backend side and end-to-end encryption approach. If you want to learn more about Laravel Passport and OpenSSL encryption this project maybe useful to you for researching and learning. In this project was implemented of some Laravel feature, such as:
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - Multiple back-ends for [session](https://laravel.com/docs/session).
@@ -24,7 +24,7 @@ If you interest with some feature with this project let's clone it then, explore
 
 Required Package:
 - Laravel Echo Server
-- Google Credential API, set in you Google Console Account
+- Google Credential API, set on your Google Console Account
 - Redis CLI
 - PHP Extensions OpenSSL
 
